@@ -10,6 +10,7 @@ const dataHours = document.querySelector('[data-hours]');
 const dataMinutes = document.querySelector('[data-minutes]');
 const dataSeconds = document.querySelector('[data-seconds]');
 const selectedDate = null;
+const flatpickrinput = document.querySelector('#datetime-picker');
 
 
 const options = {
@@ -28,3 +29,6 @@ const options = {
         }
   },
 };
+
+const picker = flatpickr(flatpickrinput, options);
+
