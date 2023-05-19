@@ -14,7 +14,7 @@ const flatpickrInput = document.querySelector('#datetime-picker');
 const timer = null;
 
 
- startBtn.addEventListener('click', onStartCounter);
+startBtn.addEventListener('click', onStartCounter);
 
 const options = {
   enableTime: true,
@@ -27,13 +27,13 @@ const options = {
         }
         else {
             selectedDate = selectedDates[0].getTime();
-            // console.log(selectedDates[0]);
+            console.log(selectedDates[0]);
             startBtn.disabled = false;
         }
   },
 };
 function onStartCounter() {
-    counter.start;
+    counter.start();
 };
 
 const picker = flatpickr(flatpickrInput, options);
@@ -49,16 +49,10 @@ function convertMs(ms) {
     const minutes = addZeroBefore(Math.floor(((ms % day) % hour) / minute));
     const seconds = addZeroBefore(Math.floor((((ms % day) % hour) % minute) / second));
 
-    // const days = Math.floor(ms / day);
-    // const hours = Math.floor((ms % day) / hour);
-    // const minutes = Math.floor(((ms % day) % hour) / minute);
-    // const seconds = 
-    //   Math.floor((((ms % day) % hour) % minute) / second);
-    
     return { days, hours, minutes, seconds };
-    console.log(convertMs);
+    
 }
-console.log(convertMs);
+
 
 const counter = {
     start() {
@@ -79,10 +73,10 @@ const counter = {
 };
 
 function updateTimer({ days, hours, minutes, seconds }) {
-    dataDays.textContent = '${days}';
-    dataHours.textContent = '${hours}';
-    dataMinutes.textContent = '${minutes}';
-    dataSeconds.textContent = '${seconds}';
+    dataDays.textContent = `${days}`;
+    dataHours.textContent = `${hours}`;
+    dataMinutes.textContent = `${minutes}`;
+    dataSeconds.textContent = `${seconds}`;
 }
 
 function addZeroBefore(value) {
