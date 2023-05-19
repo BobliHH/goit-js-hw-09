@@ -19,17 +19,16 @@ startBtn.addEventListener('click', onStartCounter);
 const options = {
   enableTime: true,
   time_24hr: true,
-  defaultDate: new Date(),
+  defaultDate: Date.now(),
   minuteIncrement: 1,
-    onClose(selectedDates) {
-        if (selectedDates[0].getTime() < currentDate) {
-          alert("Please choose a date in the future")
-        }
-        else {
-            selectedDate = selectedDates[0].getTime();
-            console.log(selectedDates[0]);
-            startBtn.disabled = false;
-        }
+  onClose(selectedDates) {
+    if (selectedDates[0].getTime() < currentDate) {
+      alert('Please choose a date in the future');
+    } else {
+      selectedDate = selectedDates[0].getTime();
+    //   console.log(selectedDates[0]);
+      startBtn.disabled = false;
+    }
   },
 };
 function onStartCounter() {
@@ -44,10 +43,10 @@ function convertMs(ms) {
     const hour = minute * 60;
     const day = hour * 24;
 
-    const days = addZeroBefore(Math.floor(ms / day));
-    const hours = addZeroBefore(Math.floor((ms % day) / hour));
-    const minutes = addZeroBefore(Math.floor(((ms % day) % hour) / minute));
-    const seconds = addZeroBefore(Math.floor((((ms % day) % hour) % minute) / second));
+    const days = addLeadingZero(Math.floor(ms / day));
+    const hours = addLeadingZero(Math.floor((ms % day) / hour));
+    const minutes = addLeadingZero(Math.floor(((ms % day) % hour) / minute));
+    const seconds = addLeadingZero(Math.floor((((ms % day) % hour) % minute) / second));
 
     return { days, hours, minutes, seconds };
     
@@ -57,14 +56,16 @@ function convertMs(ms) {
 const counter = {
     start() {
         intervalId = setInterval(() => {
+            currentDate = Date.now();
             let remainingTime = selectedDate - currentDate;
-            updateTimer(convertMs, remainingTime);
+            updateTimer(convertMs(remainingTime));
             startBtn.disabled = true;
             flatpickrInput.disabled = true;
+
             if (remainingTime <= 1000) {
                 this.stop();
             }
-        }, 1000)
+        }, 1000);
     },
     stop() {
         startBtn.disabled = false;
@@ -79,7 +80,7 @@ function updateTimer({ days, hours, minutes, seconds }) {
     dataSeconds.textContent = `${seconds}`;
 }
 
-function addZeroBefore(value) {
+function addLeadingZero(value) {
   return String(value).padStart(2, '0');
 }
 
