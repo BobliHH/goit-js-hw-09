@@ -44,16 +44,16 @@ function convertMs(ms) {
     const hour = minute * 60;
     const day = hour * 24;
 
-    // const days = addZeroBefore(Math.floor(ms / day));
-    // const hours = addZeroBefore(Math.floor((ms % day) / hour));
-    // const minutes = addZeroBefore(Math.floor(((ms % day) % hour) / minute));
-    // const seconds = addZeroBefore(Math.floor((((ms % day) % hour) % minute) / second));
+    const days = addZeroBefore(Math.floor(ms / day));
+    const hours = addZeroBefore(Math.floor((ms % day) / hour));
+    const minutes = addZeroBefore(Math.floor(((ms % day) % hour) / minute));
+    const seconds = addZeroBefore(Math.floor((((ms % day) % hour) % minute) / second));
 
-    const days = Math.floor(ms / day);
-    const hours = Math.floor((ms % day) / hour);
-    const minutes = Math.floor(((ms % day) % hour) / minute);
-    const seconds = 
-      Math.floor((((ms % day) % hour) % minute) / second);
+    // const days = Math.floor(ms / day);
+    // const hours = Math.floor((ms % day) / hour);
+    // const minutes = Math.floor(((ms % day) % hour) / minute);
+    // const seconds = 
+    //   Math.floor((((ms % day) % hour) % minute) / second);
     
     return { days, hours, minutes, seconds };
     console.log(convertMs);
