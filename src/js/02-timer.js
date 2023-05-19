@@ -20,7 +20,7 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
     onClose(selectedDates) {
-        if (selectedDates[0].getTime() < currentdate) {
+        if (selectedDates[0].getTime() < currentDate) {
           alert("Please choose a date in the future")
         }
         else {
