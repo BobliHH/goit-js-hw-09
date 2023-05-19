@@ -11,6 +11,7 @@ const dataMinutes = document.querySelector('[data-minutes]');
 const dataSeconds = document.querySelector('[data-seconds]');
 const selectedDate = null;
 const flatpickrinput = document.querySelector('#datetime-picker');
+const timer = null;
 
 
 const options = {
@@ -32,3 +33,7 @@ const options = {
 
 const picker = flatpickr(flatpickrinput, options);
 
+const counter = setInterval(() => {
+    
+}
+)
