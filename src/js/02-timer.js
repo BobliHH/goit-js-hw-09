@@ -2,17 +2,19 @@ import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
 let currentDate = Date.now();
-const calendar = document.querySelector('datetime-picker');
 const startBtn = document.querySelector('[data-start]');
 startBtn.disabled = true;
 const dataDays = document.querySelector('[data-days]');
 const dataHours = document.querySelector('[data-hours]');
 const dataMinutes = document.querySelector('[data-minutes]');
 const dataSeconds = document.querySelector('[data-seconds]');
-const selectedDate = null;
-const flatpickrinput = document.querySelector('#datetime-picker');
+let selectedDate = null;
+let intervalId = null;
+const flatpickrInput = document.querySelector('#datetime-picker');
 const timer = null;
 
+
+ startBtn.addEventListener('click', onStartCounter);
 
 const options = {
   enableTime: true,
@@ -25,13 +27,16 @@ const options = {
         }
         else {
             selectedDate = selectedDates[0].getTime();
-            console.log(selectedDates[0]);
+            // console.log(selectedDates[0]);
             startBtn.disabled = false;
         }
   },
 };
+function onStartCounter() {
+    counter.start;
+};
 
-const picker = flatpickr(flatpickrinput, options);
+const picker = flatpickr(flatpickrInput, options);
 
 function convertMs(ms) {
     const second = 1000;
@@ -39,29 +44,45 @@ function convertMs(ms) {
     const hour = minute * 60;
     const day = hour * 24;
 
-    const days = addZeroBefore(Math.floor(ms / day));
-    const hours = addZeroBefore(Math.floor((ms % day) / hour));
-    const minutes = addZeroBefore(Math.floor(((ms % day) % hour) / minute));
-    const seconds = addZeroBefore(Math.floor(((ms % day) % hour % minute) / second));
+    // const days = addZeroBefore(Math.floor(ms / day));
+    // const hours = addZeroBefore(Math.floor((ms % day) / hour));
+    // const minutes = addZeroBefore(Math.floor(((ms % day) % hour) / minute));
+    // const seconds = addZeroBefore(Math.floor((((ms % day) % hour) % minute) / second));
+
+    const days = Math.floor(ms / day);
+    const hours = Math.floor((ms % day) / hour);
+    const minutes = Math.floor(((ms % day) % hour) / minute);
+    const seconds = 
+      Math.floor((((ms % day) % hour) % minute) / second);
     
     return { days, hours, minutes, seconds };
+    console.log(convertMs);
 }
+console.log(convertMs);
 
-const counter =  {
+const counter = {
     start() {
-        let intervalId = setInterval(() => {
-            const remainingTime = selectedDate - currentDate;
+        intervalId = setInterval(() => {
+            let remainingTime = selectedDate - currentDate;
+            updateTimer(convertMs, remainingTime);
             startBtn.disabled = true;
-            flatpickr.disabled = true;
-       })
-    }
-}
+            flatpickrInput.disabled = true;
+            if (remainingTime <= 1000) {
+                this.stop();
+            }
+        }, 1000)
+    },
+    stop() {
+        startBtn.disabled = false;
+        clearInterval(intervalId);
+    },
+};
 
 function updateTimer({ days, hours, minutes, seconds }) {
-    dataDays = days;
-    dataHours = hours;
-    dataMinutes = minutes;
-    dataSeconds = seconds;
+    dataDays.textContent = '${days}';
+    dataHours.textContent = '${hours}';
+    dataMinutes.textContent = '${minutes}';
+    dataSeconds.textContent = '${seconds}';
 }
 
 function addZeroBefore(value) {
