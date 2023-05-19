@@ -1,7 +1,7 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
-let currentdate = Date.now();
+let currentDate = Date.now();
 const calendar = document.querySelector('datetime-picker');
 const startBtn = document.querySelector('[data-start]');
 startBtn.disabled = true;
@@ -33,7 +33,38 @@ const options = {
 
 const picker = flatpickr(flatpickrinput, options);
 
-const counter = setInterval(() => {
+function convertMs(ms) {
+    const second = 1000;
+    const minute = second * 60;
+    const hour = minute * 60;
+    const day = hour * 24;
+
+    const days = addZeroBefore(Math.floor(ms / day));
+    const hours = addZeroBefore(Math.floor((ms % day) / hour));
+    const minutes = addZeroBefore(Math.floor(((ms % day) % hour) / minute));
+    const seconds = addZeroBefore(Math.floor(((ms % day) % hour % minute) / second));
     
+    return { days, hours, minutes, seconds };
 }
-)
+
+const counter =  {
+    start() {
+        let intervalId = setInterval(() => {
+            const remainingTime = selectedDate - currentDate;
+            startBtn.disabled = true;
+            flatpickr.disabled = true;
+       })
+    }
+}
+
+function updateTimer({ days, hours, minutes, seconds }) {
+    dataDays = days;
+    dataHours = hours;
+    dataMinutes = minutes;
+    dataSeconds = seconds;
+}
+
+function addZeroBefore(value) {
+  return String(value).padStart(2, '0');
+}
+
