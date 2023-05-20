@@ -14,19 +14,20 @@ console.log(amount);
 form.addEventListener('click', onCreatePromises);
 
 function createPromise(position, delay) {
-  new Promise((resolve, reject) => {
-    const shouldResolve = Math.random() > 0.3;
-    setTimeout(() => {
-      if (shouldResolve) {
-        // Fulfill
+  const shouldResolve = Math.random() > 0.3;
+  if (shouldResolve) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
         resolve({ position, delay });
-      } else {
-        // Reject
+      }, delay);
+    });
+  } else {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
         reject({ position, delay });
-      }
-    }, delay);
-  });
-  return Promise;
+      }, delay);
+    });
+  }
 }
 
 function onCreatePromises(e) {
@@ -40,7 +41,7 @@ function onCreatePromises(e) {
   console.log(newAmount);
 
   for (let i = 1; i <= newAmount; i++) {
-    newDelay += newStep;
+    
 
     createPromise(i, newDelay)
       .then(({ position, newDelay }) => {
@@ -53,5 +54,6 @@ function onCreatePromises(e) {
         notiflix.Notify.failure(`❌Rejected promise ${position}in ${newDelay}ms`);
         // alert('fail');
       });
+    newDelay += newStep;
   }
 }
