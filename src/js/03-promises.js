@@ -32,27 +32,23 @@ function createPromise(position, delay) {
 
 function onCreatePromises(e) {
   e.preventDefault();
-  let newDelay = delay.value;
-  let newStep = step.value;
-  let newAmount = amount.value;
-
+  let newDelay = parseInt(delay.value);
+  let newStep = parseInt(step.value);
+  let newAmount = parseInt(amount.value);
   console.log(newDelay);
   console.log(newStep);
   console.log(newAmount);
-
-  for (let i = 1; i <= newAmount; i++) {
-    
-
+  for (let i = 0; i < newAmount; i++) {
     createPromise(i, newDelay)
-      .then(({ position, newDelay }) => {
+      .then(({ position, delay }) => {
         notiflix.Notify.success(
-          `✅ Fullfield promise ${position}in ${newDelay}ms`
+          `✅ Fulfilled promise ${position + 1} in ${delay} ms`
         );
-        // alert('success');
       })
-      .catch(({ position, newDelay }) => {
-        notiflix.Notify.failure(`❌Rejected promise ${position}in ${newDelay}ms`);
-        // alert('fail');
+      .catch(({ position, delay }) => {
+        notiflix.Notify.failure(
+          `❌ Rejected promise ${position + 1} in ${delay} ms`
+        );
       });
     newDelay += newStep;
   }
